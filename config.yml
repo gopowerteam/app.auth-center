@@ -1,6 +1,22 @@
 wechat:
-  auth: 'https://open.weixin.qq.com/connect/oauth2/authorize'
-  scope: 'snsapi_base'
-  response_type: 'code'
-  appid: 'ww6384f2fac9054721'
+  authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
+wework:
+  qrconnect_url: https://open.work.weixin.qq.com/wwopen/sso/qrConnect
 dingtalk:
+  authorize_url: https://oapi.dingtalk.com/connect/oauth2/sns_authorize
+apps:
+  - name: test
+    type: wework
+    appid: ww6384f2fac9054721
+    response_type: code
+    scope: snsapi_base
+    redirect_uri: http://test.xbt-dev.top
+    agentid: 1000030
+
+  - name: test
+    type: wework
+    appid: ww6384f2fac9054721
+    response_type: code
+    scope: snsapi_auth
+    redirect_uri: http://test.xbt-dev.top
+    agentid: 1000030
