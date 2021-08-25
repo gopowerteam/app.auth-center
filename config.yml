@@ -1,0 +1,6 @@
+wechat:
+  auth: 'https://open.weixin.qq.com/connect/oauth2/authorize'
+  scope: 'snsapi_base'
+  response_type: 'code'
+  appid: 'ww6384f2fac9054721'
+dingtalk:
