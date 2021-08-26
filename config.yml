@@ -2,6 +2,7 @@ wechat:
   authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
   qrconnect_url: https://open.weixin.qq.com/connect/qrconnect
 wework:
+  authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
   qrconnect_url: https://open.work.weixin.qq.com/wwopen/sso/qrConnect
 dingtalk:
   authorize_url: https://oapi.dingtalk.com/connect/oauth2/sns_authorize
@@ -35,5 +36,5 @@ apps:
     type: dingtalk
     appid: dingm3zm5devazzb33jc
     response_type: code
-    scope: snsapi_login
+    scope: snsapi_auth
     redirect_uri: https://test.xbt-dev.top
