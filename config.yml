@@ -1,15 +1,18 @@
 wechat:
   authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
+  qrconnect_url: https://open.weixin.qq.com/connect/qrconnect
 wework:
   qrconnect_url: https://open.work.weixin.qq.com/wwopen/sso/qrConnect
 dingtalk:
   authorize_url: https://oapi.dingtalk.com/connect/oauth2/sns_authorize
+  qrconnect_url: https://oapi.dingtalk.com/connect/qrconnect
 apps:
   - name: test
     type: wework
     appid: ww6384f2fac9054721
     response_type: code
-    scope: snsapi_base
+    # scope: snsapi_base
+    scope: snsapi_login
     redirect_uri: http://test.xbt-dev.top
     agentid: 1000030
 
@@ -20,3 +23,17 @@ apps:
     scope: snsapi_auth
     redirect_uri: http://test.xbt-dev.top
     agentid: 1000030
+
+  - name: juejin
+    type: wechat
+    appid: wx5059f665cac93f16
+    response_type: code
+    scope: snsapi_login
+    redirect_uri: https://juejin.cn/passport/auth/login_success
+
+  - name: ttt
+    type: dingtalk
+    appid: dingm3zm5devazzb33jc
+    response_type: code
+    scope: snsapi_login
+    redirect_uri: https://test.xbt-dev.top
