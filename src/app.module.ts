@@ -1,20 +1,22 @@
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { QrConnectService } from './services/qr-connect/qr-connect.service';
 import { AppController } from './controllers/app/app.controller';
-import { AuthorizeService } from './services/authorize/authorize.service';
-import { JssdkService } from './services/jssdk/jssdk.service';
+import { WechatService } from './services/wechat/wechat.service';
+import { WeworkService } from './services/wework/wework.service';
+import { DingtalkService } from './services/dingtalk/dingtalk.service';
 
 @Module({
   imports: [
     HttpModule,
+    CacheModule.register(),
     ConfigModule.forRoot({
       load: [configuration],
     }),
   ],
   controllers: [AppController],
-  providers: [QrConnectService, AuthorizeService, JssdkService],
+  providers: [QrConnectService, WechatService, WeworkService, DingtalkService],
 })
 export class AppModule {}

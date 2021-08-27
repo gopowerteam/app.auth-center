@@ -19,11 +19,11 @@ type TicketResponse = {
   data: { ticket: string; expires_in: number };
 };
 
-const ACCESS_TOKEN_KEY = 'wechat_access_token';
-const TICKET_KEY = 'wechat_ticket';
+const ACCESS_TOKEN_KEY = 'wework_access_token';
+const TICKET_KEY = 'wework_ticket';
 
 @Injectable()
-export class WechatService implements IService {
+export class WeworkService implements IService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     private readonly configService: ConfigService,
@@ -75,13 +75,13 @@ export class WechatService implements IService {
   }
 
   /**
-   * 获取微信授权地址
+   * 获取企业微信授权地址
    * @param app
    * @returns
    */
   public getAuthorizeUrl(app: AppConfig) {
     // 授权地址
-    const authorizeUrl = this.configService.get('wechat.authorize_url');
+    const authorizeUrl = this.configService.get('wework.authorize_url');
     // 授权参数
     const query = qs.stringify({
       appid: app.appid,
@@ -101,17 +101,16 @@ export class WechatService implements IService {
    */
   private getQrConnectUrl(app: AppConfig) {
     // 获取企业微信扫码认证地址
-    const qrConnectUrl = this.configService.get('wechat.qrconnect_url');
+    const qrConnectUrl = this.configService.get('wework.qrconnect_url');
     // 获取请求参数
     const query = qs.stringify({
       appid: app.appid,
+      agentid: app.agentid,
       redirect_uri: app.redirect_uri,
-      response_type: app.response_type,
-      scope: 'snsapi_login',
       state: Date.now(),
     });
 
-    return `${qrConnectUrl}?${query}#wechat_redirect`;
+    return `${qrConnectUrl}?${query}`;
   }
 
   /**
@@ -128,7 +127,7 @@ export class WechatService implements IService {
    * @returns
    */
   private getTicket(accessToken: string) {
-    const ticketUrl = this.configService.get('wechat.ticket_url');
+    const ticketUrl = this.configService.get('wework.ticket_url');
 
     // 从缓存获取AccessToken
     const getTicketFromCache = from(this.cacheManager.get<string>(TICKET_KEY));
@@ -139,7 +138,7 @@ export class WechatService implements IService {
         .get(ticketUrl, {
           params: {
             access_token: accessToken,
-            type: 'jsapi',
+            type: 'agent_config',
           },
         })
         .pipe(
@@ -166,7 +165,7 @@ export class WechatService implements IService {
    */
   private getAccessToken(app: AppConfig) {
     // 获取TokenUrl地址
-    const tokenUrl = this.configService.get('wechat.token_url');
+    const tokenUrl = this.configService.get('wework.token_url');
 
     // 从缓存获取AccessToken
     const getAccessTokenFromCache = from(
@@ -178,8 +177,7 @@ export class WechatService implements IService {
       this.httpService
         .get(tokenUrl, {
           params: {
-            grant_type: 'client_credential',
-            appid: app.appid,
+            corpid: app.appid,
             secret: app.secret,
           },
         })

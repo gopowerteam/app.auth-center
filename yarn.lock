@@ -659,6 +659,11 @@
     tslib "2.3.0"
     uuid "8.3.2"
 
+"@nestjs/mapped-types@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.nlark.com/@nestjs/mapped-types/download/@nestjs/mapped-types-1.0.0.tgz#52a0441795f6da8144a35970d3ebc19281f31cfd"
+  integrity sha1-UqBEF5X22oFEo1lw0+vBkoHzHP0=
+
 "@nestjs/platform-express@^8.0.0":
   version "8.0.6"
   resolved "https://registry.nlark.com/@nestjs/platform-express/download/@nestjs/platform-express-8.0.6.tgz#fee8baca5eb37c5e17f350a6e514318876bd5f56"
@@ -680,6 +685,15 @@
     fs-extra "10.0.0"
     jsonc-parser "3.0.0"
     pluralize "8.0.0"
+
+"@nestjs/swagger@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.nlark.com/@nestjs/swagger/download/@nestjs/swagger-5.0.9.tgz#4c621fcab04c4835645cb41ef563378dc6bacfd2"
+  integrity sha1-TGIfyrBMSDVkXLQe9WM3jca6z9I=
+  dependencies:
+    "@nestjs/mapped-types" "1.0.0"
+    lodash "4.17.21"
+    path-to-regexp "3.2.0"
 
 "@nestjs/testing@^8.0.0":
   version "8.0.6"
@@ -798,6 +812,11 @@
   dependencies:
     "@types/connect" "*"
     "@types/node" "*"
+
+"@types/cache-manager@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.nlark.com/@types/cache-manager/download/@types/cache-manager-3.4.2.tgz#d57e7e5e6374d1037bdce753a05c9703e4483401"
+  integrity sha1-1X5+XmN00QN73OdToFyXA+RINAE=
 
 "@types/connect@*":
   version "3.4.35"
@@ -1382,6 +1401,11 @@ astral-regex@^2.0.0:
   resolved "https://registry.npm.taobao.org/astral-regex/download/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
   integrity sha1-SDFDxWeu7UeFdZwIZXhtx319LjE=
 
+async@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.nlark.com/async/download/async-3.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fasync%2Fdownload%2Fasync-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
+  integrity sha1-s6JoXF67ZB094C0WEALGD8n4VyA=
+
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npm.taobao.org/asynckit/download/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -1580,6 +1604,15 @@ bytes@3.1.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/bytes/download/bytes-3.1.0.tgz#f6cf7933a360e0588fa9fde85651cdc7f805d1f6"
   integrity sha1-9s95M6Ng4FiPqf3oVlHNx/gF0fY=
+
+cache-manager@^3.4.4:
+  version "3.4.4"
+  resolved "https://registry.nlark.com/cache-manager/download/cache-manager-3.4.4.tgz#c69814763d3f3031395ae0d3a9a9296a91602226"
+  integrity sha1-xpgUdj0/MDE5WuDTqakpapFgIiY=
+  dependencies:
+    async "3.2.0"
+    lodash "^4.17.21"
+    lru-cache "6.0.0"
 
 call-bind@^1.0.0:
   version "1.0.2"
@@ -1907,7 +1940,14 @@ create-require@^1.1.0:
   resolved "https://registry.npm.taobao.org/create-require/download/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha1-wdfo8eX2z8n/ZfnNNS03NIdWwzM=
 
-cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
+cross-env@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.npm.taobao.org/cross-env/download/cross-env-7.0.3.tgz?cache=0&sync_timestamp=1606855533528&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcross-env%2Fdownload%2Fcross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+  integrity sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=
+  dependencies:
+    cross-spawn "^7.0.1"
+
+cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.nlark.com/cross-spawn/download/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
   integrity sha1-9zqFudXUHQRVUcF34ogtSshXKKY=
@@ -1915,6 +1955,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypto@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/crypto/download/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
+  integrity sha1-KvG3ytgXXSTIobB3glV5SiGAMDc=
 
 css-select@^4.1.3:
   version "4.1.3"
@@ -3705,7 +3750,7 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.nlark.com/lodash.truncate/download/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"
   integrity sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=
 
-lodash@4.x, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.7.0:
+lodash@4.17.21, lodash@4.x, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.nlark.com/lodash/download/lodash-4.17.21.tgz?cache=0&sync_timestamp=1618847150612&other_urls=https%3A%2F%2Fregistry.nlark.com%2Flodash%2Fdownload%2Flodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=
@@ -3718,7 +3763,7 @@ log-symbols@^4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-lru-cache@^6.0.0:
+lru-cache@6.0.0, lru-cache@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npm.taobao.org/lru-cache/download/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
   integrity sha1-bW/mVw69lqr5D8rR2vo7JWbbOpQ=
@@ -4802,6 +4847,18 @@ supports-hyperlinks@^2.0.0:
   dependencies:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
+
+swagger-ui-dist@^3.18.1:
+  version "3.52.0"
+  resolved "https://registry.nlark.com/swagger-ui-dist/download/swagger-ui-dist-3.52.0.tgz#cb16ec6dcdf134ff47cbfe57cba7be7748429142"
+  integrity sha1-yxbsbc3xNP9Hy/5Xy6e+d0hCkUI=
+
+swagger-ui-express@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.npm.taobao.org/swagger-ui-express/download/swagger-ui-express-4.1.6.tgz#682294af3d5c70f74a1fa4d6a9b503a9ee55ea82"
+  integrity sha1-aCKUrz1ccPdKH6TWqbUDqe5V6oI=
+  dependencies:
+    swagger-ui-dist "^3.18.1"
 
 symbol-observable@4.0.0:
   version "4.0.0"

@@ -1,73 +1,94 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+<p>
+  <div align="center" style="font-size:32px;">第三方平台集中授权中心</div>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<p align="center" style="color:#A5A5A5">支持微信,企业微信,钉钉平台的公共授权中心</p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 功能描述
 
-## Description
+支持集中配置多种平台授权信息,提供公共授权服务,无需根据项目单独配置.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+支持平台
 
-## Installation
+* 微信
+* 企业微信
+* 钉钉
 
-```bash
-$ npm install
-```
+支持功能
 
-## Running the app
+* 网页授权
+* 扫码登录
+* JSSDK授权
 
-```bash
-# development
-$ npm run start
+## 网页授权
 
-# watch mode
-$ npm run start:dev
+**请求路径:**
 
-# production mode
-$ npm run start:prod
-```
+/authorize/{app} 
 
-## Test
+**参数:**
 
-```bash
-# unit tests
-$ npm run test
+| 名称  |   说明   |  类型  |
+| :---: | :------: | :----: |
+|  app  | 应用名称 | 字符串 |
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+**描述:**
 
-## Support
+获取授权地址进行自动重定向
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 扫码登录
 
-## Stay in touch
+**请求路径:**
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+/qr-connect/{app} 
 
-## License
+**参数:**
 
-Nest is [MIT licensed](LICENSE).
+
+| 名称  |   说明   |  类型  |
+| :---: | :------: | :----: |
+|  app  | 应用名称 | 字符串 |
+
+
+**描述:**
+
+获取扫码登录图片地址,可以进行无侵入的内嵌扫码登录图片
+
+## JS-SDK授权
+
+**请求路径:**
+
+/js-config/{app} 
+
+**参数:**
+
+| 名称  |     说明     |  类型  |
+| :---: | :----------: | :----: |
+|  app  |   应用名称   | 字符串 |
+|  url  | 授权页面路径 | 字符串 |
+
+
+**描述:**
+
+获取JS-SDK授权配置数据
+
+
+
+## 应用配置
+
+
+在`.config.[env].yaml`中可以对需要授权的应用进行配置
+
+
+
+|     参数      |                说明                |
+| :-----------: | :--------------------------------: |
+|     name      |              应用名称              |
+|     type      |       wechat,wework,dingtalk       |
+|     appid     |               应用ID               |
+| response_type |      授权中response_type字段       |
+|     scope     | 授权中scope字段,仅在网页授权中有效 |
+| redirect_uri  |            授权跳转地址            |
+|    agentid    |     应用ID-企业微信,钉钉中使用     |
+|    secret     |              应用秘钥              |

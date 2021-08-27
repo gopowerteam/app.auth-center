@@ -28,4 +28,8 @@ export class AppConfig {
   @IsInt()
   @IsOptional()
   agentid: string; // 企业微信
+
+  @IsString()
+  @IsOptional()
+  secret: string;
 }

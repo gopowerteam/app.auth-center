@@ -19,11 +19,11 @@ type TicketResponse = {
   data: { ticket: string; expires_in: number };
 };
 
-const ACCESS_TOKEN_KEY = 'wechat_access_token';
-const TICKET_KEY = 'wechat_ticket';
+const ACCESS_TOKEN_KEY = 'dingtalk_access_token';
+const TICKET_KEY = 'dingtalk_ticket';
 
 @Injectable()
-export class WechatService implements IService {
+export class DingtalkService implements IService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     private readonly configService: ConfigService,
@@ -57,7 +57,7 @@ export class WechatService implements IService {
 
     return {
       nonceStr: noncestr,
-      timestamp,
+      timeStamp: timestamp,
       signature,
     };
   }
@@ -70,18 +70,19 @@ export class WechatService implements IService {
   public async getQrConnectImage(app: AppConfig) {
     return await this.qrConnectService.getQrImageUrl(
       this.getQrConnectUrl(app),
-      '.wrp_code img',
+      '.login_qrcode_content img',
+      true,
     );
   }
 
   /**
-   * 获取微信授权地址
+   * 获取企业微信授权地址
    * @param app
    * @returns
    */
   public getAuthorizeUrl(app: AppConfig) {
     // 授权地址
-    const authorizeUrl = this.configService.get('wechat.authorize_url');
+    const authorizeUrl = this.configService.get('dingtalk.authorize_url');
     // 授权参数
     const query = qs.stringify({
       appid: app.appid,
@@ -91,7 +92,7 @@ export class WechatService implements IService {
       state: Date.now(),
     });
 
-    return `${authorizeUrl}?${query}#wechat_redirect`;
+    return `${authorizeUrl}?${query}`;
   }
 
   /**
@@ -100,8 +101,8 @@ export class WechatService implements IService {
    * @returns
    */
   private getQrConnectUrl(app: AppConfig) {
-    // 获取企业微信扫码认证地址
-    const qrConnectUrl = this.configService.get('wechat.qrconnect_url');
+    // 获取钉钉扫码认证地址
+    const qrConnectUrl = this.configService.get('dingtalk.qrconnect_url');
     // 获取请求参数
     const query = qs.stringify({
       appid: app.appid,
@@ -111,7 +112,7 @@ export class WechatService implements IService {
       state: Date.now(),
     });
 
-    return `${qrConnectUrl}?${query}#wechat_redirect`;
+    return `${qrConnectUrl}?${query}`;
   }
 
   /**
@@ -119,7 +120,7 @@ export class WechatService implements IService {
    * @returns
    */
   private getSignature(str) {
-    return crypto.createHash('sha1').update(str).digest('hex');
+    return crypto.createHash('sha256').update(str).digest('hex');
   }
 
   /**
@@ -128,7 +129,7 @@ export class WechatService implements IService {
    * @returns
    */
   private getTicket(accessToken: string) {
-    const ticketUrl = this.configService.get('wechat.ticket_url');
+    const ticketUrl = this.configService.get('dingtalk.ticket_url');
 
     // 从缓存获取AccessToken
     const getTicketFromCache = from(this.cacheManager.get<string>(TICKET_KEY));
@@ -139,7 +140,6 @@ export class WechatService implements IService {
         .get(ticketUrl, {
           params: {
             access_token: accessToken,
-            type: 'jsapi',
           },
         })
         .pipe(
@@ -166,7 +166,7 @@ export class WechatService implements IService {
    */
   private getAccessToken(app: AppConfig) {
     // 获取TokenUrl地址
-    const tokenUrl = this.configService.get('wechat.token_url');
+    const tokenUrl = this.configService.get('dingtalk.token_url');
 
     // 从缓存获取AccessToken
     const getAccessTokenFromCache = from(
@@ -178,9 +178,8 @@ export class WechatService implements IService {
       this.httpService
         .get(tokenUrl, {
           params: {
-            grant_type: 'client_credential',
-            appid: app.appid,
-            secret: app.secret,
+            appkey: app.appid,
+            appsecret: app.secret,
           },
         })
         .pipe(

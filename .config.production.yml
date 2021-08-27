@@ -1,0 +1,49 @@
+wechat:
+  authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
+  qrconnect_url: https://open.weixin.qq.com/connect/qrconnect
+  token_url: https://api.weixin.qq.com/cgi-bin/token
+  ticket_url: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+wework:
+  authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
+  qrconnect_url: https://open.work.weixin.qq.com/wwopen/sso/qrConnect
+  token_url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+  ticket_url: https://qyapi.weixin.qq.com/cgi-bin/ticket/get
+dingtalk:
+  authorize_url: https://oapi.dingtalk.com/connect/oauth2/sns_authorize
+  qrconnect_url: https://oapi.dingtalk.com/connect/qrconnect
+  token_url: https://oapi.dingtalk.com/gettoken
+  ticket_url: https://oapi.dingtalk.com/get_jsapi_ticket
+
+apps:
+  - name: wechat
+    type: wechat
+    appid: ww6384f2fac9054721
+    response_type: code
+    scope: snsapi_base # 仅用于网页授权
+    redirect_uri: http://test.xbt-dev.top
+
+  - name: wework
+    type: wework
+    appid: ww6384f2fac9054721
+    agentid: 1000030
+    response_type: code
+    scope: snsapi_base # 仅用于网页授权
+    redirect_uri: http://test.xbt-dev.top
+    secret: e16jj22PoV3iwQ5vtL6nRQzcLEYPNriHHggnhYz7ukc
+
+  - name: dingtalk
+    type: dingtalk
+    appid: dingm3zm5devazzb33jc
+    agentid: 1279118630
+    secret: 8lxP1ggzI7iNh3UseBjSOnmZzWVaDTxXobP9d1pgFw5LZpLsZpyCFRuBeh7QLYJo
+    response_type: code
+    scope: snsapi_login # 仅用于网页授权
+    redirect_uri: https://test.xbt-dev.top
+
+  # 用来测试微信扫码
+  - name: juejin
+    type: wechat
+    appid: wx5059f665cac93f16
+    response_type: code
+    scope: snsapi_login # 仅用于网页授权
+    redirect_uri: https://juejin.cn/passport/auth/login_success
