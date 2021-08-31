@@ -26,5 +26,5 @@ COPY --from=installer $APP_PATH/node_modules ./node_modules
 # -复制代码文件
 COPY . .
 # -运行编译
-RUN yarn build \
-	&& yarn start:prod
+RUN yarn build 
+CMD yarn start:prod
