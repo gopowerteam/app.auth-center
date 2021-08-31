@@ -1,34 +1,46 @@
-import { HttpService } from '@nestjs/axios';
-import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Cache } from 'cache-manager';
-import { AppConfig } from 'src/models/app-config';
-import { IService } from 'src/interfaces/service.interface';
-import * as R from 'ramda';
-import * as crypto from 'crypto';
-import * as qs from 'qs';
-import { from, iif, lastValueFrom, map, of, switchMap } from 'rxjs';
-import { tap } from 'rxjs';
-import { QrConnectService } from '../qr-connect/qr-connect.service';
+import { HttpService } from '@nestjs/axios'
+import {
+  CACHE_MANAGER,
+  Inject,
+  Injectable
+} from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { Cache } from 'cache-manager'
+import { AppConfig } from 'src/models/app-config'
+import { IService } from 'src/interfaces/service.interface'
+import * as R from 'ramda'
+import * as crypto from 'crypto'
+import * as qs from 'qs'
+import {
+  from,
+  iif,
+  lastValueFrom,
+  map,
+  of,
+  switchMap
+} from 'rxjs'
+import { tap } from 'rxjs'
+import { QrConnectService } from '../qr-connect/qr-connect.service'
 
 type AccessTokenResponse = {
-  data: { access_token: string; expires_in: number };
-};
+  data: { access_token: string; expires_in: number }
+}
 
 type TicketResponse = {
-  data: { ticket: string; expires_in: number };
-};
+  data: { ticket: string; expires_in: number }
+}
 
-const ACCESS_TOKEN_KEY = 'dingtalk_access_token';
-const TICKET_KEY = 'dingtalk_ticket';
+const ACCESS_TOKEN_KEY = 'dingtalk_access_token'
+const TICKET_KEY = 'dingtalk_ticket'
 
 @Injectable()
 export class DingtalkService implements IService {
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
-    private readonly qrConnectService: QrConnectService,
+    private readonly qrConnectService: QrConnectService
   ) {}
 
   /**
@@ -39,11 +51,13 @@ export class DingtalkService implements IService {
   public async getJSConfig(app: AppConfig, url: string) {
     // 获取JSAPI_TICKET
     const jsapi_ticket = await lastValueFrom(
-      this.getAccessToken(app).pipe(switchMap(this.getTicket.bind(this))),
-    );
+      this.getAccessToken(app).pipe(
+        switchMap(this.getTicket.bind(this))
+      )
+    )
 
-    const noncestr = Math.random().toString(36).substr(2); // 随机字符串
-    const timestamp = Math.floor(Date.now() / 1000); // 获取时间戳，数值类型
+    const noncestr = Math.random().toString(36).substr(2) // 随机字符串
+    const timestamp = Math.floor(Date.now() / 1000) // 获取时间戳，数值类型
 
     // 获取签名
     const signature = this.getSignature(
@@ -51,15 +65,15 @@ export class DingtalkService implements IService {
         jsapi_ticket,
         noncestr,
         timestamp,
-        url,
-      }),
-    );
+        url
+      })
+    )
 
     return {
       nonceStr: noncestr,
       timeStamp: timestamp,
-      signature,
-    };
+      signature
+    }
   }
 
   /**
@@ -71,8 +85,8 @@ export class DingtalkService implements IService {
     return await this.qrConnectService.getQrImageUrl(
       this.getQrConnectUrl(app),
       '.login_qrcode_content img',
-      true,
-    );
+      true
+    )
   }
 
   /**
@@ -82,17 +96,19 @@ export class DingtalkService implements IService {
    */
   public getAuthorizeUrl(app: AppConfig) {
     // 授权地址
-    const authorizeUrl = this.configService.get('dingtalk.authorize_url');
+    const authorizeUrl = this.configService.get(
+      'dingtalk.authorize_url'
+    )
     // 授权参数
     const query = qs.stringify({
       appid: app.appid,
       redirect_uri: app.redirect_uri,
       response_type: app.response_type,
       scope: app.scope,
-      state: Date.now(),
-    });
+      state: Date.now()
+    })
 
-    return `${authorizeUrl}?${query}`;
+    return `${authorizeUrl}?${query}`
   }
 
   /**
@@ -102,17 +118,19 @@ export class DingtalkService implements IService {
    */
   private getQrConnectUrl(app: AppConfig) {
     // 获取钉钉扫码认证地址
-    const qrConnectUrl = this.configService.get('dingtalk.qrconnect_url');
+    const qrConnectUrl = this.configService.get(
+      'dingtalk.qrconnect_url'
+    )
     // 获取请求参数
     const query = qs.stringify({
       appid: app.appid,
       redirect_uri: app.redirect_uri,
       response_type: app.response_type,
       scope: 'snsapi_login',
-      state: Date.now(),
-    });
+      state: Date.now()
+    })
 
-    return `${qrConnectUrl}?${query}`;
+    return `${qrConnectUrl}?${query}`
   }
 
   /**
@@ -120,7 +138,10 @@ export class DingtalkService implements IService {
    * @returns
    */
   private getSignature(str) {
-    return crypto.createHash('sha256').update(str).digest('hex');
+    return crypto
+      .createHash('sha256')
+      .update(str)
+      .digest('hex')
   }
 
   /**
@@ -129,35 +150,53 @@ export class DingtalkService implements IService {
    * @returns
    */
   private getTicket(accessToken: string) {
-    const ticketUrl = this.configService.get('dingtalk.ticket_url');
+    const ticketUrl = this.configService.get(
+      'dingtalk.ticket_url'
+    )
 
     // 从缓存获取AccessToken
-    const getTicketFromCache = from(this.cacheManager.get<string>(TICKET_KEY));
+    const getTicketFromCache = from(
+      this.cacheManager.get<string>(TICKET_KEY)
+    )
 
     // 从网络获取AccessToken
     const getTicketFromHttp = () =>
       this.httpService
         .get(ticketUrl, {
           params: {
-            access_token: accessToken,
-          },
+            access_token: accessToken
+          }
         })
         .pipe(
           // 更新缓存
-          tap(({ data: { ticket, expires_in } }: TicketResponse) => {
-            this.cacheManager.set(TICKET_KEY, ticket, expires_in);
-          }),
+          tap(
+            ({
+              data: { ticket, expires_in }
+            }: TicketResponse) => {
+              this.cacheManager.set(
+                TICKET_KEY,
+                ticket,
+                expires_in
+              )
+            }
+          ),
           // 返回AccessToken
-          map(({ data: { ticket } }: TicketResponse) => ticket),
-        );
+          map(
+            ({ data: { ticket } }: TicketResponse) => ticket
+          )
+        )
 
     // 获取AccessToken
     return getTicketFromCache.pipe(
-      switchMap((ticket) =>
+      switchMap(ticket =>
         // 缓存AccessToken不存在的情况下从网络获取
-        iif(() => R.isEmpty(ticket), getTicketFromHttp(), of(ticket)),
-      ),
-    );
+        iif(
+          () => R.isEmpty(ticket),
+          getTicketFromHttp(),
+          of(ticket)
+        )
+      )
+    )
   }
 
   /**
@@ -166,12 +205,14 @@ export class DingtalkService implements IService {
    */
   private getAccessToken(app: AppConfig) {
     // 获取TokenUrl地址
-    const tokenUrl = this.configService.get('dingtalk.token_url');
+    const tokenUrl = this.configService.get(
+      'dingtalk.token_url'
+    )
 
     // 从缓存获取AccessToken
     const getAccessTokenFromCache = from(
-      this.cacheManager.get<string>(ACCESS_TOKEN_KEY),
-    );
+      this.cacheManager.get<string>(ACCESS_TOKEN_KEY)
+    )
 
     // 从网络获取AccessToken
     const getAccessTokenFromHttp = () =>
@@ -179,30 +220,40 @@ export class DingtalkService implements IService {
         .get(tokenUrl, {
           params: {
             appkey: app.appid,
-            appsecret: app.secret,
-          },
+            appsecret: app.secret
+          }
         })
         .pipe(
           // 更新缓存
-          tap(({ data: { access_token, expires_in } }: AccessTokenResponse) => {
-            this.cacheManager.set(ACCESS_TOKEN_KEY, access_token, expires_in);
-          }),
+          tap(
+            ({
+              data: { access_token, expires_in }
+            }: AccessTokenResponse) => {
+              this.cacheManager.set(
+                ACCESS_TOKEN_KEY,
+                access_token,
+                expires_in
+              )
+            }
+          ),
           // 返回AccessToken
           map(
-            ({ data: { access_token } }: AccessTokenResponse) => access_token,
-          ),
-        );
+            ({
+              data: { access_token }
+            }: AccessTokenResponse) => access_token
+          )
+        )
 
     // 获取AccessToken
     return getAccessTokenFromCache.pipe(
-      switchMap((accessToken) =>
+      switchMap(accessToken =>
         // 缓存AccessToken不存在的情况下从网络获取
         iif(
           () => R.isEmpty(accessToken),
           getAccessTokenFromHttp(),
-          of(accessToken),
-        ),
-      ),
-    );
+          of(accessToken)
+        )
+      )
+    )
   }
 }
