@@ -11,8 +11,8 @@ function setupSwagger(app: INestApplication) {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-
-  SwaggerModule.setup('doc', app, document);
+  console.log(document);
+  SwaggerModule.setup('api-docs', app, document);
 }
 
 async function bootstrap() {

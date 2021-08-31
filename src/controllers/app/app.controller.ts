@@ -8,7 +8,7 @@ import {
   Redirect,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ApiOperation } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { IService } from 'src/interfaces/service.interface';
@@ -17,7 +17,7 @@ import { DingtalkService } from 'src/services/dingtalk/dingtalk.service';
 import { WechatService } from 'src/services/wechat/wechat.service';
 import { WeworkService } from 'src/services/wework/wework.service';
 
-@Controller()
+@Controller('/api')
 export class AppController {
   constructor(
     private readonly configService: ConfigService,
@@ -80,7 +80,7 @@ export class AppController {
    * @param app
    * @returns
    */
-  @ApiOperation({ description: '获取扫码登录图片' })
+  @ApiOperation({ operationId: 'qrConnect', summary: '获取扫码登录图片' })
   @Get('qrConnect/:app')
   async qrConnect(@Param('app') name: string) {
     // 获取应用配置
@@ -111,7 +111,7 @@ export class AppController {
    * @param app
    * @returns
    */
-  @ApiOperation({ description: '获取授权路径' })
+  @ApiOperation({ operationId: 'authorize', summary: '获取授权路径' })
   @Get('authorize/:app')
   @Redirect()
   async authorize(@Param('app') name: string) {
@@ -130,7 +130,7 @@ export class AppController {
    * @param app
    * @returns
    */
-  @ApiOperation({ description: '获取JSConfig配置' })
+  @ApiOperation({ operationId: 'jsConfig', summary: '获取JSConfig配置' })
   @Get('js-config/:app')
   async JSConfig(@Param('app') name: string, @Query('url') url: string) {
     const app = await this.getAppConfig(name);
