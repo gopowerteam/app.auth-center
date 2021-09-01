@@ -4,7 +4,7 @@ import { App } from 'src/entities/app.entity'
 import { AppService } from '../../services/app/app.service'
 import { ApiExcludeController } from '@nestjs/swagger'
 
-// @ApiExcludeController()
+@ApiExcludeController()
 @Crud({
   model: {
     type: App
