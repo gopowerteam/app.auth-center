@@ -7,8 +7,8 @@ import {
 } from '@nestjs/swagger'
 import { join } from 'path'
 import { AppModule } from './app.module'
-import { svelteTemplateEngine } from './render/svelte-template-engine'
-
+// import { svelteTemplateEngine } from './services/render/svelte-template-enginete-engine'
+import * as svelteViewEngine from 'svelte-view-engine'
 function setupSwagger(app: NestExpressApplication) {
   const config = new DocumentBuilder()
     .setTitle('API Document')
@@ -24,8 +24,18 @@ function setupViewEngine(app: NestExpressApplication) {
   app.setBaseViewsDir(join(__dirname, '..', 'src', 'views'))
   app.useStaticAssets(join(__dirname, '..', 'public'))
 
-  app.engine('svelte', svelteTemplateEngine)
-  app.setViewEngine('svelte')
+  const engine = svelteViewEngine({
+    env: 'dev',
+    template: './public/template/index.html',
+    dir: './src/views',
+    type: 'svelte',
+    buildDir: '../artifacts/pages',
+    liveReload: true
+  })
+
+  app.engine(engine.type, engine.render)
+  app.set('view engine', engine.type)
+  app.set('views', engine.dir)
 }
 
 async function bootstrap() {
@@ -39,6 +49,8 @@ async function bootstrap() {
   // 安装ViewEngine
   setupViewEngine(app)
 
-  await app.listen(3000)
+  await app.listen(3000).then(() => {
+    console.log('http://localhost:3000')
+  })
 }
 bootstrap()

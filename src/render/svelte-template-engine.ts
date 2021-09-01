@@ -1,5 +1,5 @@
-import { ConsoleLogger } from '@nestjs/common'
 import 'svelte/register'
+import * as svelte from 'svelte/compiler'
 
 export function svelteTemplateEngine(
   filePath: string,
@@ -16,7 +16,8 @@ export function svelteTemplateEngine(
 
   const App = require(filePath).default
   const { html, head, css } = App.render(options)
-  const appendHeader = `${head}<style>${css.code}</style>`
-
+  const js = svelte.compile(filePath).js.code
+  const appendHeader = `${head}<style>${css.code}</style><script>${js}</script>`
+  console.log(js)
   next(null, html.replace('%head%', appendHeader))
 }

@@ -1,0 +1,15 @@
+wechat:
+  authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
+  qrconnect_url: https://open.weixin.qq.com/connect/qrconnect
+  token_url: https://api.weixin.qq.com/cgi-bin/token
+  ticket_url: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+wework:
+  authorize_url: https://open.weixin.qq.com/connect/oauth2/authorize
+  qrconnect_url: https://open.work.weixin.qq.com/wwopen/sso/qrConnect
+  token_url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+  ticket_url: https://qyapi.weixin.qq.com/cgi-bin/ticket/get
+dingtalk:
+  authorize_url: https://oapi.dingtalk.com/connect/oauth2/sns_authorize
+  qrconnect_url: https://oapi.dingtalk.com/connect/qrconnect
+  token_url: https://oapi.dingtalk.com/gettoken
+  ticket_url: https://oapi.dingtalk.com/get_jsapi_ticket

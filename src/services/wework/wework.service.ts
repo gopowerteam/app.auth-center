@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Cache } from 'cache-manager'
-import { AppConfig } from 'src/models/app-config'
 import { IService } from 'src/interfaces/service.interface'
 import * as R from 'ramda'
 import * as crypto from 'crypto'
@@ -21,6 +20,7 @@ import {
 } from 'rxjs'
 import { tap } from 'rxjs'
 import { QrConnectService } from '../qr-connect/qr-connect.service'
+import { App } from 'src/entities/app.entity'
 
 type AccessTokenResponse = {
   data: { access_token: string; expires_in: number }
@@ -48,7 +48,7 @@ export class WeworkService implements IService {
    * @param app
    * @returns
    */
-  public async getJSConfig(app: AppConfig, url: string) {
+  public async getJSConfig(app: App, url: string) {
     // 获取JSAPI_TICKET
     const jsapi_ticket = await lastValueFrom(
       this.getAccessToken(app).pipe(
@@ -81,7 +81,7 @@ export class WeworkService implements IService {
    * @param app
    * @returns
    */
-  public async getQrConnectImage(app: AppConfig) {
+  public async getQrConnectImage(app: App) {
     return await this.qrConnectService.getQrImageUrl(
       this.getQrConnectUrl(app),
       '.wrp_code img'
@@ -93,7 +93,7 @@ export class WeworkService implements IService {
    * @param app
    * @returns
    */
-  public getAuthorizeUrl(app: AppConfig) {
+  public getAuthorizeUrl(app: App) {
     // 授权地址
     const authorizeUrl = this.configService.get(
       'wework.authorize_url'
@@ -115,7 +115,7 @@ export class WeworkService implements IService {
    * @param app
    * @returns
    */
-  private getQrConnectUrl(app: AppConfig) {
+  private getQrConnectUrl(app: App) {
     // 获取企业微信扫码认证地址
     const qrConnectUrl = this.configService.get(
       'wework.qrconnect_url'
@@ -202,7 +202,7 @@ export class WeworkService implements IService {
    * 获取AccessToken
    * @param app
    */
-  private getAccessToken(app: AppConfig) {
+  private getAccessToken(app: App) {
     // 获取TokenUrl地址
     const tokenUrl = this.configService.get(
       'wework.token_url'

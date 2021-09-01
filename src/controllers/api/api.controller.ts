@@ -11,8 +11,10 @@ import { ConfigService } from '@nestjs/config'
 import { ApiOperation } from '@nestjs/swagger'
 import { plainToClass } from 'class-transformer'
 import { validate } from 'class-validator'
+import { AppType } from 'src/config/enum.config'
+import { App } from 'src/entities/app.entity'
 import { IService } from 'src/interfaces/service.interface'
-import { AppConfig, AppType } from 'src/models/app-config'
+import { AppService } from 'src/modules/config/services/app/app.service'
 import { DingtalkService } from 'src/services/dingtalk/dingtalk.service'
 import { WechatService } from 'src/services/wechat/wechat.service'
 import { WeworkService } from 'src/services/wework/wework.service'
@@ -23,7 +25,8 @@ export class ApiController {
     private readonly configService: ConfigService,
     private readonly wechatService: WechatService,
     private readonly weworkService: WeworkService,
-    private readonly dingtalkService: DingtalkService
+    private readonly dingtalkService: DingtalkService,
+    private readonly appService: AppService
   ) {}
 
   /**
@@ -31,9 +34,10 @@ export class ApiController {
    * @param name
    * @returns
    */
-  private async getAppConfig(name): Promise<AppConfig> {
-    const apps: any[] = this.configService.get('apps')
-    const app = apps.find(x => x.name === name)
+  private async getAppConfig(name): Promise<App> {
+    const app = await this.appService.findOne({
+      name
+    })
 
     if (!app) {
       throw new HttpException(
@@ -46,7 +50,7 @@ export class ApiController {
     }
 
     if (app) {
-      const object = plainToClass(AppConfig, app)
+      const object = plainToClass(App, app)
       const errors = await validate(object)
 
       if (errors.length > 0) {
