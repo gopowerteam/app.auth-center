@@ -127,7 +127,7 @@ export class WeworkService implements IService {
       redirect_uri: app.redirect_uri,
       state: Date.now()
     })
-
+    console.log('connect url:', `${qrConnectUrl}?${query}`)
     return `${qrConnectUrl}?${query}`
   }
 

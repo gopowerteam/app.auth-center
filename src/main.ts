@@ -29,7 +29,7 @@ function setupViewEngine(app: NestExpressApplication) {
     template: './public/template/index.html',
     dir: './src/views',
     type: 'svelte',
-    buildDir: '../artifacts/pages',
+    buildDir: './.temp/view',
     liveReload: true
   })
 
