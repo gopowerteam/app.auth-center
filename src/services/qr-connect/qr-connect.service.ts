@@ -12,7 +12,7 @@ export class QrConnectService {
     iframe = false
   ) {
     const browser = await puppeteer.launch({
-      // args: ['--disable-dev-shm-usage'],
+      args: ['--disable-dev-shm-usage'],
       defaultViewport: {
         width: 1920,
         height: 1080
