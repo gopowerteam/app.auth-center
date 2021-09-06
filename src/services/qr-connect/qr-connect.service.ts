@@ -1,8 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import * as puppeteer from 'puppeteer'
-
+import fs from 'fs'
 @Injectable()
 export class QrConnectService {
+  private isDocker() {
+    try {
+      fs.statSync('/.dockerenv')
+      return true
+    } catch (_) {
+      return false
+    }
+  }
   /**
    * 获取扫码登录图片
    */
@@ -12,7 +20,9 @@ export class QrConnectService {
     iframe = false
   ) {
     const browser = await puppeteer.launch({
-      args: ['--disable-dev-shm-usage'],
+      args: this.isDocker()
+        ? ['--no-sandbox', '--disable-dev-shm-usage']
+        : [],
       defaultViewport: {
         width: 1920,
         height: 1080
