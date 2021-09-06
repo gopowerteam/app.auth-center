@@ -43,7 +43,7 @@ async function bootstrap() {
     await NestFactory.create<NestExpressApplication>(
       AppModule,
       {
-        bufferLogs: true
+        cors: true
       }
     )
   // 安装swagger
