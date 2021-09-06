@@ -27,7 +27,7 @@ export class StorageController {
    * @param name
    * @returns
    */
-  private async getStorageConfig(name): Promise<Storage> {
+  private async getStorage(name): Promise<Storage> {
     const storage = await this.storageService.findOne({
       name
     })
@@ -78,14 +78,31 @@ export class StorageController {
    * @returns
    */
   @ApiOperation({
+    operationId: 'getStorageConfig',
+    summary: '获取文件存储配置'
+  })
+  @Get('config/:storage')
+  async getStorageConfig(@Param('storage') name: string) {
+    const storage = await this.getStorage(name)
+    const service = this.getStorageService(storage.type)
+
+    return await service.getConfig(storage)
+  }
+
+  /**
+   * 获取文件存储授权
+   * @param app
+   * @returns
+   */
+  @ApiOperation({
     operationId: 'getStorageCredential',
     summary: '获取文件存储授权'
   })
-  @Get('storage-credential/:storage')
+  @Get('credential/:storage')
   async getStorageCredential(
     @Param('storage') name: string
   ) {
-    const storage = await this.getStorageConfig(name)
+    const storage = await this.getStorage(name)
     const service = this.getStorageService(storage.type)
 
     return await service.getCredential(storage)

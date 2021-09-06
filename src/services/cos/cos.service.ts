@@ -4,6 +4,18 @@ import { Storage } from 'src/entities/storage.entity'
 
 @Injectable()
 export class CosService {
+  /**
+   * 获取配置
+   * @param storage
+   * @returns
+   */
+  public getConfig(storage: Storage) {
+    return {
+      bucket: storage.bucket,
+      region: storage.region
+    }
+  }
+
   public getCredential(storage: Storage) {
     const policy = sts.getPolicy([
       {
@@ -26,7 +38,11 @@ export class CosService {
           if (err) {
             reject()
           } else {
-            resolve(credential)
+            resolve({
+              bucket: storage.bucket,
+              region: storage.region,
+              ...credential
+            })
           }
         }
       )

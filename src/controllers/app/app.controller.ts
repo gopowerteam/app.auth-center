@@ -33,7 +33,7 @@ export class AppController {
    * @param name
    * @returns
    */
-  private async getAppConfig(name): Promise<App> {
+  private async getApp(name): Promise<App> {
     const app = await this.appService.findOne({
       name
     })
@@ -90,7 +90,7 @@ export class AppController {
   @Get('qrConnect/:app')
   async qrConnect(@Param('app') name: string) {
     // 获取应用配置
-    const app = await this.getAppConfig(name)
+    const app = await this.getApp(name)
     // 获取应用服务
     const service = this.getAppService(app.type)
     // 获取扫码登录图片地址
@@ -125,7 +125,7 @@ export class AppController {
   @Redirect()
   async authorize(@Param('app') name: string) {
     // 获取应用配置
-    const app = await this.getAppConfig(name)
+    const app = await this.getApp(name)
     // 获取应用服务
     const service = this.getAppService(app.type)
 
@@ -148,7 +148,7 @@ export class AppController {
     @Param('app') name: string,
     @Query('url') url: string
   ) {
-    const app = await this.getAppConfig(name)
+    const app = await this.getApp(name)
     const service = this.getAppService(app.type)
 
     return await service.getJSConfig(app, url)
