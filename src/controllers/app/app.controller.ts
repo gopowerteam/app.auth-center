@@ -101,7 +101,9 @@ export class AppController {
       return {
         image
       }
-    } catch {
+    } catch (ex) {
+      console.error(ex)
+
       throw new HttpException(
         {
           status: HttpStatus.INTERNAL_SERVER_ERROR,
