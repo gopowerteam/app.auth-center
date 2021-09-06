@@ -42,11 +42,11 @@ COPY . .
 # -运行编译
 RUN yarn build 
 # -添加权限
-# RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
-# 	&& mkdir -p /home/pptruser/Downloads \
-# 	&& chown -R pptruser:pptruser /home/pptruser \
-# 	&& chown -R pptruser:pptruser $APP_PATH
+RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
+	&& mkdir -p /home/pptruser/Downloads \
+	&& chown -R pptruser:pptruser /home/pptruser \
+	&& chown -R pptruser:pptruser $APP_PATH
 
-# USER pptruser
+USER pptruser
 
 CMD yarn start:prod

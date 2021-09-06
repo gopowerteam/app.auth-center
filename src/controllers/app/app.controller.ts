@@ -41,6 +41,7 @@ export class AppController {
     if (!app) {
       throw new HttpException(
         {
+          code: 404,
           status: HttpStatus.NOT_FOUND,
           error: '未找到指定应用'
         },
@@ -57,6 +58,7 @@ export class AppController {
 
         throw new HttpException(
           {
+            code: 500,
             status: HttpStatus.INTERNAL_SERVER_ERROR,
             error: '应用配置异常'
           },
@@ -106,8 +108,9 @@ export class AppController {
 
       throw new HttpException(
         {
+          code: 500,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: '扫码登录配置授权异常'
+          error: '扫码登录授权异常'
         },
         HttpStatus.NOT_FOUND
       )

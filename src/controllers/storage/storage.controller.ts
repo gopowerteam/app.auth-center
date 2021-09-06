@@ -35,6 +35,7 @@ export class StorageController {
     if (!storage) {
       throw new HttpException(
         {
+          code: 404,
           status: HttpStatus.NOT_FOUND,
           error: '未找到指定存储'
         },
@@ -51,6 +52,7 @@ export class StorageController {
 
         throw new HttpException(
           {
+            code: 500,
             status: HttpStatus.INTERNAL_SERVER_ERROR,
             error: '存储配置异常'
           },

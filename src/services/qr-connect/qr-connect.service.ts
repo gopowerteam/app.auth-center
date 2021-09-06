@@ -21,7 +21,7 @@ export class QrConnectService {
   ) {
     const browser = await puppeteer.launch({
       args: this.isDocker()
-        ? ['--no-sandbox', '--disable-dev-shm-usage']
+        ? ['--disable-dev-shm-usage']
         : [],
       defaultViewport: {
         width: 1920,
