@@ -7,10 +7,13 @@ import { AppController } from './controllers/app/app.controller'
 import { WechatService } from './services/wechat/wechat.service'
 import { WeworkService } from './services/wework/wework.service'
 import { DingtalkService } from './services/dingtalk/dingtalk.service'
-import { ApiController } from './controllers/api/api.controller'
 import { ConfigModule } from './modules/config/config.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { App } from './entities/app.entity'
+import { Storage } from './entities/storage.entity'
+import { CosService } from './services/cos/cos.service'
+import { HomeController } from './controllers/home/home.controller'
+import { StorageController } from './controllers/storage/storage.controller'
 
 @Module({
   imports: [
@@ -19,21 +22,26 @@ import { App } from './entities/app.entity'
     NestConfigModule.forRoot({
       load: [configuration]
     }),
-    ConfigModule,
     TypeOrmModule.forRoot({
       type: 'better-sqlite3',
       database: './.data/database.sqlite',
       logging: true,
       synchronize: true,
-      entities: [App]
-    })
+      entities: [App, Storage]
+    }),
+    ConfigModule
   ],
-  controllers: [AppController, ApiController],
+  controllers: [
+    HomeController,
+    AppController,
+    StorageController
+  ],
   providers: [
     QrConnectService,
     WechatService,
     WeworkService,
-    DingtalkService
+    DingtalkService,
+    CosService
   ]
 })
 export class AppModule {}

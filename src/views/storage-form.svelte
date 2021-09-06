@@ -4,19 +4,19 @@
 
   let formModel = {
     name: '',
-    appid: '',
-    agentid: '',
-    response_type: '',
-    scope: '',
     type: '',
-    redirect_uri: '',
-    secret: ''
+    secretId: '',
+    secretKey: '',
+    action: '',
+    bucket: '',
+    region: '',
+    prefix: ''
   }
 
-  export let app
+  export let storage
 
   async function onSubmit() {
-    if (app && app.id) {
+    if (storage && storage.id) {
       onUpdate()
     } else {
       onCreate()
@@ -24,7 +24,7 @@
   }
 
   async function onCreate() {
-    fetch('/config/app', {
+    fetch('/config/storage', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -33,13 +33,13 @@
     }).then(({ ok }) => {
       if (ok) {
         alert('创建成功')
-        location.href = '/app'
+        location.href = '/storage'
       }
     })
   }
 
   async function onUpdate() {
-    fetch(`/config/app/${app.id}`, {
+    fetch(`/config/storage/${storage.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -48,15 +48,15 @@
     }).then(({ ok }) => {
       if (ok) {
         alert('更新成功')
-        location.href = '/app'
+        location.href = '/storage'
       }
     })
   }
 
   onMount(() => {
-    if (app) {
+    if (storage) {
       formModel = {
-        ...app
+        ...storage
       }
     }
   })
@@ -66,7 +66,7 @@
   <title>登录授权</title>
 </svelte:head>
 
-<Layout path="app">
+<Layout path="login">
   <div
     class="header p-5 flex flex-row space-x-5 justify-between"
   >
@@ -78,7 +78,7 @@
           class="btn btn-sm btn-info">提交</button
         ></a
       >
-      <a href="/app">
+      <a href="/storage">
         <button class="btn btn-sm btn-info">返回</button></a
       >
     </div>
@@ -87,7 +87,7 @@
   <div class="form-container px-10 py-3">
     <div class="form-control">
       <label class="label" for="name">
-        <span class="label-text">应用名称</span>
+        <span class="label-text">存储名称</span>
       </label>
       <input
         bind:value={formModel.name}
@@ -99,7 +99,7 @@
 
     <div class="form-control">
       <label class="label" for="type">
-        <span class="label-text">应用类型</span>
+        <span class="label-text">存储类型</span>
       </label>
       <input
         bind:value={formModel.type}
@@ -110,11 +110,11 @@
     </div>
 
     <div class="form-control">
-      <label class="label" for="appid">
-        <span class="label-text">appid</span>
+      <label class="label" for="secretId">
+        <span class="label-text">secretId</span>
       </label>
       <input
-        bind:value={formModel.appid}
+        bind:value={formModel.secretId}
         type="text"
         placeholder=""
         class="input input-bordered"
@@ -122,11 +122,11 @@
     </div>
 
     <div class="form-control">
-      <label class="label" for="agentid">
-        <span class="label-text">agentid</span>
+      <label class="label" for="secretKey">
+        <span class="label-text">secretKey</span>
       </label>
       <input
-        bind:value={formModel.agentid}
+        bind:value={formModel.secretKey}
         type="text"
         placeholder=""
         class="input input-bordered"
@@ -134,11 +134,11 @@
     </div>
 
     <div class="form-control">
-      <label class="label" for="response_type">
-        <span class="label-text">response_type</span>
+      <label class="label" for="action">
+        <span class="label-text">action</span>
       </label>
       <input
-        bind:value={formModel.response_type}
+        bind:value={formModel.action}
         type="text"
         placeholder=""
         class="input input-bordered"
@@ -146,11 +146,11 @@
     </div>
 
     <div class="form-control">
-      <label class="label" for="scope">
-        <span class="label-text">scope</span>
+      <label class="label" for="bucket">
+        <span class="label-text">bucket</span>
       </label>
       <input
-        bind:value={formModel.scope}
+        bind:value={formModel.bucket}
         type="text"
         placeholder=""
         class="input input-bordered"
@@ -158,11 +158,11 @@
     </div>
 
     <div class="form-control">
-      <label class="label" for="redirect_uri">
-        <span class="label-text">redirect_uri</span>
+      <label class="label" for="region">
+        <span class="label-text">region</span>
       </label>
       <input
-        bind:value={formModel.redirect_uri}
+        bind:value={formModel.region}
         type="text"
         placeholder=""
         class="input input-bordered"
@@ -170,11 +170,11 @@
     </div>
 
     <div class="form-control">
-      <label class="label" for="secret">
-        <span class="label-text">secret</span>
+      <label class="label" for="prefix">
+        <span class="label-text">prefix</span>
       </label>
       <input
-        bind:value={formModel.secret}
+        bind:value={formModel.prefix}
         type="text"
         placeholder=""
         class="input input-bordered"

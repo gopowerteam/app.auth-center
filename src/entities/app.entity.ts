@@ -2,14 +2,16 @@ import { AppType } from 'src/config/enum.config'
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column
+  Column,
+  Unique
 } from 'typeorm'
 
 @Entity()
 export class App {
   @PrimaryGeneratedColumn() id: number
 
-  @Column() name: string
+  @Column({ unique: true })
+  name: string
 
   @Column({
     type: 'simple-enum',

@@ -1,6 +1,6 @@
 import { App } from 'src/entities/app.entity'
 
-export interface IService {
+export interface IAppService {
   // js-config授权
   getJSConfig(
     app: App,

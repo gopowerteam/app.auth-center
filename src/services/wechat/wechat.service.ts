@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Cache } from 'cache-manager'
-import { IService } from 'src/interfaces/service.interface'
+import { IAppService } from 'src/interfaces/app-service.interface'
 import * as R from 'ramda'
 import * as crypto from 'crypto'
 import * as qs from 'qs'
@@ -34,7 +34,7 @@ const ACCESS_TOKEN_KEY = 'wechat_access_token'
 const TICKET_KEY = 'wechat_ticket'
 
 @Injectable()
-export class WechatService implements IService {
+export class WechatService implements IAppService {
   constructor(
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,

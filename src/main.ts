@@ -13,6 +13,7 @@ function setupSwagger(app: NestExpressApplication) {
     .setTitle('API Document')
     .setDescription('API description')
     .setVersion('1.0')
+    .addTag('app')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)

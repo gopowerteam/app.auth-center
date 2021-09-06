@@ -1,11 +1,14 @@
 <script>
   import Layout from './layout.svelte'
 
-  export let apps
+  export let storages
 
+  /**
+   * 删除应用
+   */
   function onDelete(id) {
-    if (window.confirm('Do you really want to leave?')) {
-      fetch(`/config/app/${id}`, {
+    if (window.confirm('是否确定删除?')) {
+      fetch(`/config/storage/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -21,13 +24,13 @@
 </script>
 
 <svelte:head>
-  <title>登录授权</title>
+  <title>存储授权</title>
 </svelte:head>
 
-<Layout path="login">
+<Layout path="storage">
   <div class="action text-right p-5">
-    <a href="/app-form">
-      <button class="btn btn-sm btn-info">创建应用</button
+    <a href="/storage-form">
+      <button class="btn btn-sm btn-info">创建存储</button
       ></a
     >
   </div>
@@ -37,30 +40,31 @@
         <thead>
           <tr>
             <th />
-            <th>应用名称</th>
-            <th>应用ID</th>
-            <th>应用类型</th>
+            <th>存储名称</th>
+            <th>存储类型</th>
+            <th>应用桶</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          {#each apps as app, index}
+          {#each storages as storage, index}
             <tr>
               <th>{index + 1}</th>
-              <th>{app.name}</th>
-              <td>{app.appid}</td>
-              <td>{app.type}</td>
+              <th>{storage.name}</th>
+              <td>{storage.bucket}</td>
+              <td>{storage.type}</td>
               <td>
                 <button class="btn btn-link">
                   <a
                     class="link link-primary"
-                    href="/app-form/{app.id}">编辑</a
+                    href="/storage-form/{storage.id}"
+                    >编辑</a
                   >
                 </button>
 
                 <button
                   class="btn btn-link"
-                  on:click={() => onDelete(app.id)}
+                  on:click={() => onDelete(storage.id)}
                   >删除</button
                 >
               </td>

@@ -3,3 +3,8 @@ export enum AppType {
   wework = 'wework',
   dingtalk = 'dingtalk'
 }
+
+export enum StorageType {
+  cos = 'cos',
+  oss = 'oss'
+}

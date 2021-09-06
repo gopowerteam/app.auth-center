@@ -41,6 +41,7 @@
     "daisyui": "^1.14.0",
     "js-yaml": "^4.1.0",
     "puppeteer": "^10.2.0",
+    "qcloud-cos-sts": "^3.0.6",
     "ramda": "^0.27.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
