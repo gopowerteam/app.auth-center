@@ -115,7 +115,7 @@ export class WeworkService implements IAppService {
    * @param app
    * @returns
    */
-  private getQrConnectUrl(app: App) {
+  public getQrConnectUrl(app: App) {
     // 获取企业微信扫码认证地址
     const qrConnectUrl = this.configService.get(
       'wework.qrconnect_url'
@@ -125,7 +125,8 @@ export class WeworkService implements IAppService {
       appid: app.appid,
       agentid: app.agentid,
       redirect_uri: app.redirect_uri,
-      state: Date.now()
+      login_type: 'jssdk',
+      version: '1.2.4'
     })
 
     return `${qrConnectUrl}?${query}`

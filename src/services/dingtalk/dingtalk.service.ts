@@ -116,7 +116,7 @@ export class DingtalkService implements IAppService {
    * @param app
    * @returns
    */
-  private getQrConnectUrl(app: App) {
+  public getQrConnectUrl(app: App) {
     // 获取钉钉扫码认证地址
     const qrConnectUrl = this.configService.get(
       'dingtalk.qrconnect_url'

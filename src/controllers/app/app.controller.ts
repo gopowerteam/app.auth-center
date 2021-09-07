@@ -80,42 +80,25 @@ export class AppController {
     return services[app]
   }
 
-  // /**
-  //  * 扫码登录
-  //  * @param app
-  //  * @returns
-  //  */
-  // @ApiOperation({
-  //   operationId: 'qrConnect',
-  //   summary: '获取扫码登录图片'
-  // })
-  // @Get('qrConnect/:app')
-  // async qrConnect(@Param('app') name: string) {
-  //   // 获取应用配置
-  //   const app = await this.getApp(name)
-  //   // 获取应用服务
-  //   const service = this.getAppService(app.type)
-  //   // 获取扫码登录图片地址
+  /**
+   * 扫码登录
+   * @param app
+   * @returns
+   */
+  @ApiOperation({
+    operationId: 'getQrConnectUrl',
+    summary: '获取扫码登录地址'
+  })
+  @Get('qr-connect/:app')
+  async getQrConnectUrl(@Param('app') name: string) {
+    // 获取应用配置
+    const app = await this.getApp(name)
+    // 获取应用服务
+    const service = this.getAppService(app.type)
+    // 获取扫码登录图片地址
 
-  //   try {
-  //     const image = await service.getQrConnectImage(app)
-
-  //     return {
-  //       image
-  //     }
-  //   } catch (ex) {
-  //     console.error(ex)
-
-  //     throw new HttpException(
-  //       {
-  //         code: 500,
-  //         status: HttpStatus.INTERNAL_SERVER_ERROR,
-  //         error: '扫码登录授权异常'
-  //       },
-  //       HttpStatus.NOT_FOUND
-  //     )
-  //   }
-  // }
+    return await service.getQrConnectUrl(app)
+  }
 
   /**
    * 扫码登录

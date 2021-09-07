@@ -115,7 +115,7 @@ export class WechatService implements IAppService {
    * @param app
    * @returns
    */
-  private getQrConnectUrl(app: App) {
+  public getQrConnectUrl(app: App) {
     // 获取企业微信扫码认证地址
     const qrConnectUrl = this.configService.get(
       'wechat.qrconnect_url'

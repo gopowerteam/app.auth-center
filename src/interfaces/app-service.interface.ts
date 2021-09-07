@@ -8,7 +8,7 @@ export interface IAppService {
   ): Promise<{ [key: string]: string | number }>
 
   // 扫码登录
-  getQrConnectImage(app: App): Promise<string>
+  getQrConnectUrl(app: App): string
 
   // 网页授权
   getAuthorizeUrl(app: App): string
