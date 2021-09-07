@@ -2,7 +2,6 @@ import { ConfigModule as NestConfigModule } from '@nestjs/config'
 import configuration from './config/configuration'
 import { CacheModule, Module } from '@nestjs/common'
 import { HttpModule } from '@nestjs/axios'
-import { QrConnectService } from './services/qr-connect/qr-connect.service'
 import { AppController } from './controllers/app/app.controller'
 import { WechatService } from './services/wechat/wechat.service'
 import { WeworkService } from './services/wework/wework.service'
@@ -37,7 +36,6 @@ import { StorageController } from './controllers/storage/storage.controller'
     StorageController
   ],
   providers: [
-    QrConnectService,
     WechatService,
     WeworkService,
     DingtalkService,

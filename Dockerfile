@@ -11,19 +11,19 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 	&& apk add --no-cache --update \
 	nodejs \
 	npm \
-	yarn \
-	g++ \
-	make \
-	python3 \
-	chromium \
-	nss \
-	freetype \
-	harfbuzz \
-	ca-certificates \
-	ttf-freefont
+	yarn
+	# g++ \
+	# make \
+	# python3 \
+	# chromium \
+	# nss \
+	# freetype \
+	# harfbuzz \
+	# ca-certificates \
+	# ttf-freefont
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-	PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+# 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 # STEP2: 构建依赖镜像
 FROM base as installer
@@ -42,11 +42,11 @@ COPY . .
 # -运行编译
 RUN yarn build 
 # -添加权限
-RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
-	&& mkdir -p /home/pptruser/Downloads \
-	&& chown -R pptruser:pptruser /home/pptruser \
-	&& chown -R pptruser:pptruser $APP_PATH
+# RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
+# 	&& mkdir -p /home/pptruser/Downloads \
+# 	&& chown -R pptruser:pptruser /home/pptruser \
+# 	&& chown -R pptruser:pptruser $APP_PATH
 
-USER pptruser
+# USER pptruser
 
 CMD yarn start:prod

@@ -19,7 +19,6 @@ import {
   switchMap
 } from 'rxjs'
 import { tap } from 'rxjs'
-import { QrConnectService } from '../qr-connect/qr-connect.service'
 import { App } from 'src/entities/app.entity'
 
 type AccessTokenResponse = {
@@ -39,8 +38,7 @@ export class DingtalkService implements IAppService {
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
     private readonly configService: ConfigService,
-    private readonly httpService: HttpService,
-    private readonly qrConnectService: QrConnectService
+    private readonly httpService: HttpService
   ) {}
 
   /**
@@ -74,19 +72,6 @@ export class DingtalkService implements IAppService {
       timeStamp: timestamp,
       signature
     }
-  }
-
-  /**
-   * 获取扫码登录图片
-   * @param app
-   * @returns
-   */
-  public async getQrConnectImage(app: App) {
-    return await this.qrConnectService.getQrImageUrl(
-      this.getQrConnectUrl(app),
-      '.login_qrcode_content img',
-      true
-    )
   }
 
   /**
