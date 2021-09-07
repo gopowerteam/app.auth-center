@@ -2,8 +2,7 @@ import { AppType } from 'src/config/enum.config'
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
-  Unique
+  Column
 } from 'typeorm'
 
 @Entity()

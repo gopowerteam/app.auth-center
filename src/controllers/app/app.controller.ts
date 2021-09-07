@@ -175,7 +175,7 @@ export class AppController {
     return {
       appid: app.appid,
       agentid: app.agentid,
-      redirect_url: app.redirect_uri
+      redirect_uri: app.redirect_uri
     }
   }
 }
