@@ -80,42 +80,42 @@ export class AppController {
     return services[app]
   }
 
-  /**
-   * 扫码登录
-   * @param app
-   * @returns
-   */
-  @ApiOperation({
-    operationId: 'qrConnect',
-    summary: '获取扫码登录图片'
-  })
-  @Get('qrConnect/:app')
-  async qrConnect(@Param('app') name: string) {
-    // 获取应用配置
-    const app = await this.getApp(name)
-    // 获取应用服务
-    const service = this.getAppService(app.type)
-    // 获取扫码登录图片地址
+  // /**
+  //  * 扫码登录
+  //  * @param app
+  //  * @returns
+  //  */
+  // @ApiOperation({
+  //   operationId: 'qrConnect',
+  //   summary: '获取扫码登录图片'
+  // })
+  // @Get('qrConnect/:app')
+  // async qrConnect(@Param('app') name: string) {
+  //   // 获取应用配置
+  //   const app = await this.getApp(name)
+  //   // 获取应用服务
+  //   const service = this.getAppService(app.type)
+  //   // 获取扫码登录图片地址
 
-    try {
-      const image = await service.getQrConnectImage(app)
+  //   try {
+  //     const image = await service.getQrConnectImage(app)
 
-      return {
-        image
-      }
-    } catch (ex) {
-      console.error(ex)
+  //     return {
+  //       image
+  //     }
+  //   } catch (ex) {
+  //     console.error(ex)
 
-      throw new HttpException(
-        {
-          code: 500,
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: '扫码登录授权异常'
-        },
-        HttpStatus.NOT_FOUND
-      )
-    }
-  }
+  //     throw new HttpException(
+  //       {
+  //         code: 500,
+  //         status: HttpStatus.INTERNAL_SERVER_ERROR,
+  //         error: '扫码登录授权异常'
+  //       },
+  //       HttpStatus.NOT_FOUND
+  //     )
+  //   }
+  // }
 
   /**
    * 扫码登录
@@ -157,5 +157,25 @@ export class AppController {
     const service = this.getAppService(app.type)
 
     return await service.getJSConfig(app, url)
+  }
+
+  /**
+   * 获取app配置
+   * @param app
+   * @returns
+   */
+  @ApiOperation({
+    operationId: 'getConfig',
+    summary: '获取App配置'
+  })
+  @Get('config/:app')
+  async getConfig(@Param('app') name: string) {
+    const app = await this.getApp(name)
+
+    return {
+      appid: app.appid,
+      agentid: app.agentid,
+      redirect_url: app.redirect_uri
+    }
   }
 }
