@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import * as sts from 'qcloud-cos-sts'
+import { StorageType } from 'src/config/enum.config'
 import { Storage } from 'src/entities/storage.entity'
 
 @Injectable()
@@ -12,7 +13,8 @@ export class CosService {
   public getConfig(storage: Storage) {
     return {
       bucket: storage.bucket,
-      region: storage.region
+      region: storage.region,
+      type: StorageType.cos
     }
   }
 
@@ -38,11 +40,7 @@ export class CosService {
           if (err) {
             reject()
           } else {
-            resolve({
-              bucket: storage.bucket,
-              region: storage.region,
-              ...credential
-            })
+            resolve(credential)
           }
         }
       )
