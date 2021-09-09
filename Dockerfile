@@ -11,10 +11,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 	&& apk add --no-cache --update \
 	nodejs \
 	npm \
-	yarn
+	yarn \
+	python3 
 	# g++ \
 	# make \
-	# python3 \
 	# chromium \
 	# nss \
 	# freetype \
