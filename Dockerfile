@@ -12,14 +12,14 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 	nodejs \
 	npm \
 	yarn \
-	python3 
-	# g++ \
-	# make \
+	python3 \
+	g++ \
+	make \
+	ca-certificates 
 	# chromium \
 	# nss \
 	# freetype \
 	# harfbuzz \
-	# ca-certificates \
 	# ttf-freefont
 
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
