@@ -37,6 +37,7 @@
     "cheerio": "^1.0.0-rc.10",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cos-nodejs-sdk-v5": "^2.10.2",
     "crypto": "^1.0.1",
     "daisyui": "^1.14.0",
     "js-yaml": "^4.1.0",

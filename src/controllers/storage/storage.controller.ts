@@ -3,7 +3,8 @@ import {
   Get,
   HttpException,
   HttpStatus,
-  Param
+  Param,
+  Query
 } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { plainToClass } from 'class-transformer'
@@ -108,5 +109,25 @@ export class StorageController {
     const service = this.getStorageService(storage.type)
 
     return await service.getCredential(storage)
+  }
+
+  /**
+   * 获取文件存储授权
+   * @param app
+   * @returns
+   */
+  @ApiOperation({
+    operationId: 'getObjectUrl',
+    summary: '获取文件授权地址'
+  })
+  @Get('getObjectUrl/:storage')
+  async getObjectUrl(
+    @Param('storage') name: string,
+    @Query('key') key: string
+  ) {
+    const storage = await this.getStorage(name)
+    const service = this.getStorageService(storage.type)
+
+    return await service.getObjectUrl(storage, key)
   }
 }

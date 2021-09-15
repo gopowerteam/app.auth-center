@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import * as COS from 'cos-nodejs-sdk-v5'
 import * as sts from 'qcloud-cos-sts'
 import { StorageType } from 'src/config/enum.config'
 import { Storage } from 'src/entities/storage.entity'
@@ -36,7 +37,7 @@ export class CosService {
           policy: policy,
           durationSeconds: 3600
         },
-        function (err, credential) {
+        (err, credential) => {
           if (err) {
             reject()
           } else {
@@ -45,5 +46,31 @@ export class CosService {
         }
       )
     })
+  }
+
+  public getObjectUrl(storage: Storage, key: string) {
+    const cos = new COS({
+      SecretId: storage.secretId,
+      SecretKey: storage.secretKey
+    })
+
+    return new Promise((resolve, reject) =>
+      cos.getObjectUrl(
+        {
+          Bucket: storage.bucket,
+          Region: storage.region,
+          Key: key,
+          Sign: true,
+          Expires: 1800
+        },
+        (err, data) => {
+          if (err) {
+            reject()
+          } else {
+            resolve(data.Url)
+          }
+        }
+      )
+    )
   }
 }

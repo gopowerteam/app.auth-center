@@ -6,4 +6,9 @@ export interface IStorageService {
 
   // 获取配置
   getConfig(storage: Storage): any
+
+  getObjectUrl(
+    storage: Storage,
+    key: string
+  ): Promise<string>
 }
